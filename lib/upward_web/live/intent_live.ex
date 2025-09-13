@@ -1,17 +1,15 @@
 defmodule UpwardWeb.IntentLive do
-  use Phoenix.LiveView
+  use UpwardWeb, :live_view
 
-  @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, :intent, "Type your intent...")}
+    {:ok, assign(socket, :intent, "")}
   end
 
-  @impl true
   def render(assigns) do
     ~H"""
     <div>
-      <h1>Upward Intent Demo</h1>
-      <p><%= @intent %></p>
+      <h1>Intent Centric Web3 Demo</h1>
+      <p>Your intent: <%= @intent %></p>
     </div>
     """
   end
