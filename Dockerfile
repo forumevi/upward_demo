@@ -16,12 +16,9 @@ RUN MIX_ENV=prod mix deps.get --only prod
 RUN MIX_ENV=prod mix deps.compile
 RUN MIX_ENV=prod mix compile
 
-# Assets için dev deps gerekli olabilir
-RUN MIX_ENV=dev mix deps.get
-
-# Assets kurulumu ve derlemesi
+# Assets için npm kurulumu ve build (Phoenix 1.7+)
 RUN npm --prefix assets install --production
-RUN MIX_ENV=prod mix assets.deploy
+RUN npm --prefix assets run build
 
 # Prod release oluştur
 RUN MIX_ENV=prod mix release
