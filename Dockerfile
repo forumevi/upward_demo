@@ -1,5 +1,5 @@
 # --- build stage ---
-FROM hexpm/elixir:1.15.4-erlang-26.3-alpine-3.18 as build
+FROM elixir:1.15.4-alpine as build
 
 WORKDIR /app
 
