@@ -1,0 +1,7 @@
+{
+  "name": "upward_assets",
+  "version": "0.1.0",
+  "dependencies": {
+    "esbuild": "^0.17.19"
+  }
+}
