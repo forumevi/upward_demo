@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><%= @page_title || "Upward" %></title>
+  <%= csrf_meta_tag() %>
+  <%= live_title_tag assigns[:page_title] || "Upward", suffix: " · Upward" %>
+  <%= live_flash() %>
+  <%= live_head() %>
+</head>
+<body>
+  <header>
+    <h1>Upward Web</h1>
+  </header>
+  <main role="main">
+    <%= @inner_content %>
+  </main>
+  <footer>
+    <p>&copy; 2025 Upward</p>
+  </footer>
+</body>
+</html>
