@@ -12,10 +12,8 @@ defmodule Upward.MixProject do
     ]
   end
 
-  # Compile paths
   defp elixirc_paths(_), do: ["lib"]
 
-  # Run application
   def application do
     [
       mod: {Upward.Application, []},
@@ -23,14 +21,14 @@ defmodule Upward.MixProject do
     ]
   end
 
-  # Dependencies
   defp deps do
     [
       {:phoenix, "~> 1.7.8"},
       {:phoenix_html, "~> 3.3"},
+      {:phoenix_live_reload, "~> 1.3", only: :dev},
       {:phoenix_live_view, "~> 0.19"},
-      {:telemetry_metrics, "~> 0.6"},
-      {:telemetry_poller, "~> 1.0"},
+      {:floki, ">= 0.34.0", only: :test},
+      {:esbuild, "~> 0.7", runtime: Mix.env() == :dev},
       {:gettext, "~> 0.23"},
       {:jason, "~> 1.4"},
       {:plug_cowboy, "~> 2.6"}
