@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: upward-demo
+    env: docker
+    branch: main
+    plan: free
+    autoDeploy: true
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: SECRET_KEY_BASE
+        sync: false
+        generator: secret
