@@ -3,8 +3,7 @@ defmodule Upward.Application do
 
   def start(_type, _args) do
     children = [
-      UpwardWeb.Endpoint,
-      Upward.Intents
+      UpwardWeb.Endpoint
     ]
 
     opts = [strategy: :one_for_one, name: Upward.Supervisor]
