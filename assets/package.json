@@ -1,10 +1,6 @@
 {
-  "name": "upward_assets",
-  "version": "1.0.0",
-  "scripts": {
-    "build": "esbuild js/app.js --bundle --target=es2017 --outdir=../priv/static/assets"
-  },
-  "dependencies": {
-    "esbuild": "^0.18.18"
-  }
+  "name": "upward",
+  "version": "0.1.0",
+  "dependencies": {},
+  "devDependencies": {}
 }
