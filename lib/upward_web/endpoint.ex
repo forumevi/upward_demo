@@ -1,11 +1,16 @@
 defmodule UpwardWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :upward
 
+  @session_options [
+    store: :cookie,
+    key: "_upward_key",
+    signing_salt: "randomsalt"
+  ]
+
   plug Plug.Static,
     at: "/",
     from: :upward,
-    gzip: false,
-    only: ~w(css fonts images js favicon.ico robots.txt)
+    gzip: false
 
   plug Plug.RequestId
   plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]
@@ -17,7 +22,7 @@ defmodule UpwardWeb.Endpoint do
 
   plug Plug.MethodOverride
   plug Plug.Head
-  plug Plug.Session, store: :cookie, key: "_upward_key", signing_salt: "CHANGE_ME"
+  plug Plug.Session, @session_options
 
   plug UpwardWeb.Router
 end
