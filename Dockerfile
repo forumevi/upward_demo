@@ -14,6 +14,7 @@ RUN mix local.hex --force && mix local.rebar --force
 
 # Prod dependencies
 RUN mix deps.get --only prod
+RUN mix deps.compile
 
 # Assets kurulumu ve derlemesi
 RUN npm --prefix assets install --production
