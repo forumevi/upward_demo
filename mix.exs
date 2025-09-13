@@ -13,7 +13,6 @@ defmodule Upward.MixProject do
   end
 
   # Compile paths
-  defp elixirc_paths(:test), do: ["lib", "test/support"]
   defp elixirc_paths(_), do: ["lib"]
 
   # Run application
@@ -28,12 +27,8 @@ defmodule Upward.MixProject do
   defp deps do
     [
       {:phoenix, "~> 1.7.8"},
-      {:phoenix_html, "~> 3.3"},       # Güncel stabil versiyon
-      {:phoenix_live_reload, "~> 1.3", only: :dev},
+      {:phoenix_html, "~> 3.3"},
       {:phoenix_live_view, "~> 0.19"},
-      {:floki, ">= 0.34.0", only: :test},
-      {:esbuild, "~> 0.7", runtime: Mix.env() == :dev},
-      {:swoosh, "~> 1.12"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.23"},
