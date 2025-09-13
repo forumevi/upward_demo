@@ -7,15 +7,16 @@ defmodule Upward.MixProject do
       version: "0.1.0",
       elixir: "~> 1.15",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:phoenix] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
   end
 
+  # Compile paths
   defp elixirc_paths(:test), do: ["lib", "test/support"]
   defp elixirc_paths(_), do: ["lib"]
 
+  # Run application
   def application do
     [
       mod: {Upward.Application, []},
@@ -23,15 +24,19 @@ defmodule Upward.MixProject do
     ]
   end
 
+  # Dependencies
   defp deps do
     [
-      {:phoenix, "~> 1.8.0"},
-      {:phoenix_live_view, "~> 0.20.0"},
-      {:phoenix_html, "~> 3.4"},
-      {:phoenix_live_dashboard, "~> 0.8"},
+      {:phoenix, "~> 1.7.8"},
+      {:phoenix_html, "~> 3.3"},       # Güncel stabil versiyon
+      {:phoenix_live_reload, "~> 1.3", only: :dev},
+      {:phoenix_live_view, "~> 0.19"},
+      {:floki, ">= 0.34.0", only: :test},
       {:esbuild, "~> 0.7", runtime: Mix.env() == :dev},
-      {:telemetry_metrics, "~> 0.7"},
+      {:swoosh, "~> 1.12"},
+      {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
+      {:gettext, "~> 0.23"},
       {:jason, "~> 1.4"},
       {:plug_cowboy, "~> 2.6"}
     ]
