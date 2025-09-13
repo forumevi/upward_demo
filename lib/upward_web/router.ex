@@ -1,5 +1,5 @@
 defmodule UpwardWeb.Router do
-  use UpwardWeb, :router
+  use Phoenix.Router
   import Phoenix.LiveView.Router
 
   pipeline :browser do
@@ -12,6 +12,7 @@ defmodule UpwardWeb.Router do
 
   scope "/", UpwardWeb do
     pipe_through :browser
+
     live "/", IntentLive, :index
   end
 end
