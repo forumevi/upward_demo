@@ -1,47 +1,44 @@
 # --- Build Stage ---
 FROM elixir:1.15.4-alpine AS build
 
-# Set working dir
-WORKDIR /app
-
-# Install dependencies
+# OS bağımlılıkları
 RUN apk add --no-cache build-base git nodejs npm openssl bash
 
-# Install Hex + Rebar
+# Hex ve Rebar güncelleme
 RUN mix local.hex --force && mix local.rebar --force
 
-# Copy project files
+# Çalışma dizini
+WORKDIR /app
+
+# Mix dosyalarını kopyala ve deps yükle
 COPY mix.exs mix.lock ./
+RUN mix deps.get --only prod
+RUN mix deps.compile
+
+# Config, lib ve assets dosyalarını kopyala
 COPY config config
 COPY lib lib
 COPY assets assets
 
-# Get prod dependencies
-RUN MIX_ENV=prod mix deps.get --only prod
-RUN MIX_ENV=prod mix deps.compile
-
-# Compile project
-RUN MIX_ENV=prod mix compile
-
-# Install npm dependencies for assets
+# Assets derle
 RUN npm --prefix assets install --production
-
-# Deploy assets
 RUN MIX_ENV=prod mix assets.deploy
 
-# --- Release Stage ---
-FROM elixir:1.15.4-alpine AS app
+# Prod release oluştur
+RUN MIX_ENV=prod mix release
+
+# --- Runtime Stage ---
+FROM alpine:3.18 AS app
+RUN apk add --no-cache bash openssl ncurses-libs
 
 WORKDIR /app
 
-# Install runtime dependencies
-RUN apk add --no-cache openssl bash nodejs
-
-# Copy release from build stage
+# Build stage’den release’i al
 COPY --from=build /app/_build/prod/rel/upward ./
 
-# Expose Phoenix default port
+# Prod server için entrypoint
+ENV MIX_ENV=prod
+ENV PORT=4000
 EXPOSE 4000
 
-# Start the release
 CMD ["bin/upward", "start"]
