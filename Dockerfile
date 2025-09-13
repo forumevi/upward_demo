@@ -4,7 +4,7 @@ FROM elixir:1.15.4-alpine as build
 WORKDIR /app
 
 # Gerekli paketler
-RUN apk add --no-cache build-base git nodejs npm openssl
+RUN apk add --no-cache build-base git openssl
 
 # Proje dosyalarını kopyala
 COPY . .
@@ -15,10 +15,6 @@ RUN mix local.hex --force && mix local.rebar --force
 # Prod dependencies
 RUN mix deps.get --only prod
 RUN mix deps.compile
-
-# Assets kurulumu ve derlemesi
-RUN npm --prefix assets install --production
-RUN mix assets.deploy
 
 # Prod release oluştur
 RUN MIX_ENV=prod mix release
