@@ -4,34 +4,33 @@ FROM elixir:1.15.4-alpine as build
 WORKDIR /app
 
 # Gerekli paketler
-RUN apk add --no-cache build-base git openssl
+RUN apk add --no-cache build-base git nodejs npm openssl
 
-# Proje dosyalarını kopyala
 COPY . .
 
-# Hex ve Rebar setup
 RUN mix local.hex --force && mix local.rebar --force
 
 # Prod dependencies
 RUN mix deps.get --only prod
 RUN mix deps.compile
 
-# Prod release oluştur
+# Assets
+RUN npm --prefix assets install --production
+RUN mix assets.deploy
+
+# Release
 RUN MIX_ENV=prod mix release
 
 # --- runtime stage ---
 FROM alpine:3.18
 
-# OpenSSL ve gerekli temel paketler
 RUN apk add --no-cache openssl
 
 WORKDIR /app
 
-# Build stage’den prod release’i kopyala
 COPY --from=build /app/_build/prod/rel/upward /app
 
 ENV HOME=/app
 EXPOSE 4000
 
-# Uygulamayı başlat
 CMD ["/app/bin/upward", "start"]
